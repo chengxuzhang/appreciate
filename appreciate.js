@@ -24,6 +24,10 @@
 			playWord(0);
 		}
 
+		document.getElementById("showQRcode").onclick = function(){
+			showQRcode();
+		}
+
 		function closeQRcode(){
 			Qr.parentNode.removeChild(Qr); // 去掉二维码
 		}
@@ -37,12 +41,28 @@
 		function showQRcode(){
 			var Qr = window.Qr = document.createElement("div");
 				Qr.className = 'qr';
-				Qr.setAttribute("style","position:absolute;right:100px;top:100px;background:#fff;border-radius:5px;width:300px;height:450px;z-index:999999;");
+				Qr.setAttribute("style","position:absolute;right:100px;top:100px;background:#fff;border-radius:5px;width:300px;height:450px;z-index:999999;overflow:hidden;");
 			var QrTop = document.createElement("div");
 				QrTop.className = 'qr-top';
-				QrTop.innerHTML = '<li>微信</li><li>支付宝</li>';
+				QrTop.innerHTML = '<li class="current" data-img="money.png">微信</li><li data-img="erweima.jpg">支付宝</li>';
+			var QrBody = document.createElement("div");
+				QrBody.className = 'qr-body';
+				QrBody.innerHTML = '<img src="money.png">';
 			Qr.appendChild(QrTop);
+			Qr.appendChild(QrBody);
 			document.getElementsByTagName("body")[0].appendChild(Qr);
+			var QrLi = Qr.getElementsByTagName("li");
+			var QrImg = QrBody.getElementsByTagName("img")[0];
+			for (var i = 0; i < QrLi.length; i++) {
+				QrLi[i].onclick = function(){
+					for (var j = 0; j < QrLi.length; j++) {
+						QrLi[j].className = '';
+					}
+					this.className = 'current';
+					var src = this.getAttribute("data-img");
+					QrImg.setAttribute("src",src);
+				}
+			}
 		}
 
 		/**
