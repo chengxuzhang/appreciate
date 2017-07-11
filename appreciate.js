@@ -7,18 +7,97 @@
 	window.onload = function(){
 		var appBtn = document.getElementById('appreciate');
 		var timer2;
+		var canClose = false;
 		appBtn.onclick = function(){
+			canClose = false;
 			var cover = document.createElement("div");
 				cover.setAttribute("style","opacity:0.5;filter:alpha(opacity=50);width:100%;height:100%;position:fixed;left:0px;top:0px;background-color:black;z-index:99999;");
 				cover.onclick = function(){
-					cover.parentNode.removeChild(cover);
-					stopMoney();
+					if(canClose){
+						cover.parentNode.removeChild(cover);
+						stopMoneyRain();
+						closeWord();
+					}
 				}
 			document.getElementsByTagName("body")[0].appendChild(cover);
-			startMoney(); // 开始下雨
+			playWord(0);
 		}
 
-		function stopMoney(){
+		/**
+		 * 显示二维码 显示在右侧漂浮状态，可以扫码进行支付
+		 * 包括微信和支付宝
+		 * 选项卡模式，可自由切换
+		 * @return {[type]} [description]
+		 */
+		function showQRcode(){
+			var Qr = document.createElement("div");
+				Qr.className = 'qr';
+				Qr.setAttribute("style","position:absolute;right:100px;top:100px;background:#fff;border-radius:5px;width:300px;height:450px;z-index:999999;");
+			var QrTop = document.createElement("div");
+				QrTop.className = 'qr-top';
+				QrTop.innerHTML = '<li>微信</li><li>支付宝</li>';
+			Qr.appendChild(QrTop);
+			document.getElementsByTagName("body")[0].appendChild(Qr);
+		}
+
+		/**
+		 * 关掉文字 去掉div 停掉计时器
+		 * @return {[type]} [description]
+		 */
+		function closeWord(){
+			appWord.parentNode.removeChild(appWord);
+			clearInterval(wTime);
+		}
+
+		/**
+		 * 开始播放文字，以一种比较逗比的文字说明接下来你要做的事情
+		 * @param  {[type]} mNum [description]
+		 * @return {[type]}      [description]
+		 */
+		function playWord(mNum){
+			var wNum = mNum;
+			var timeL = 100;
+			if(!document.getElementById("appWord")){
+				var appWord = window.appWord = document.createElement("div");
+					appWord.id = 'appWord';
+					appWord.setAttribute("style","position:absolute;left:100px;top:100px;width:auto;height:auto;font-size:26px;color:#fff;z-index:999999;letter-spacing:10px;");
+				document.getElementsByTagName("body")[0].appendChild(appWord);
+			}else{
+				var appWord = window.appWord = document.getElementById("appWord");
+			}
+			var str = '今天老夫掐指一算#料定要有大事发生#原来是你要来施财#不跟你多BB，音响，灯光，摄像师准备#开始下雨咯&#其实我是秦始皇，打钱吧$';
+			var wTime = window.wTime = setInterval(function(){
+				if(str.length-1 < wNum){
+					clearInterval(wTime);
+					canClose = true;
+				}else{
+					var a = str.substr(wNum,1);
+					if(a == '$'){
+						a = '';
+						showQRcode();
+					}
+					if(a == '&'){
+						a = '';
+						playMoneyRain(); // 开始下雨
+					}
+					if(a == '#'){
+						a = '<br/>';
+						clearInterval(wTime); // 清除掉
+						var sTime = setTimeout(function(){
+							playWord(wNum++);
+						},1000);
+					}
+					appWord.innerHTML += a;
+					wNum++;
+				}
+			},timeL);
+		}
+
+		/**
+		 * stop the money rain
+		 * @return {[type]} [description]
+		 */
+		function stopMoneyRain(){
 			// 清除金钱雨
 			clearInterval(timer2);
 			for (var i = 0; i < origil.length; i++) {
@@ -26,7 +105,11 @@
 			}
 		}
 
-		function startMoney(){
+		/**
+		 * 播放金钱雨动画
+		 * @return {[type]} [description]
+		 */
+		function playMoneyRain(){
 			// 金钱雨
 			var origil = window.origil = [];
 			var origil_speed = 5; // 移动速度
