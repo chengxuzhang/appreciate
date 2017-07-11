@@ -11,7 +11,7 @@
 		appBtn.onclick = function(){
 			canClose = false;
 			var cover = document.createElement("div");
-				cover.setAttribute("style","opacity:0.5;filter:alpha(opacity=50);width:100%;height:100%;position:fixed;left:0px;top:0px;background-color:black;z-index:99999;");
+				cover.className = 'money-cover';
 				cover.onclick = function(){
 					if(canClose){
 						cover.parentNode.removeChild(cover);
@@ -19,14 +19,16 @@
 						closeQRcode();
 						closeWord();
 					}
-				}
+				};
 			document.getElementsByTagName("body")[0].appendChild(cover);
 			playWord(0);
-		}
+		};
 
+		/*
 		document.getElementById("showQRcode").onclick = function(){
 			showQRcode();
 		}
+		*/
 
 		function closeQRcode(){
 			Qr.parentNode.removeChild(Qr); // 去掉二维码
@@ -41,7 +43,6 @@
 		function showQRcode(){
 			var Qr = window.Qr = document.createElement("div");
 				Qr.className = 'qr';
-				Qr.setAttribute("style","position:absolute;right:100px;top:100px;background:#fff;border-radius:5px;width:300px;height:450px;z-index:999999;overflow:hidden;");
 			var QrTop = document.createElement("div");
 				QrTop.className = 'qr-top';
 				QrTop.innerHTML = '<li class="current" data-img="money.png">微信</li><li data-img="erweima.jpg">支付宝</li>';
@@ -61,7 +62,7 @@
 					this.className = 'current';
 					var src = this.getAttribute("data-img");
 					QrImg.setAttribute("src",src);
-				}
+				};
 			}
 		}
 
@@ -85,7 +86,7 @@
 			if(!document.getElementById("appWord")){
 				var appWord = window.appWord = document.createElement("div");
 					appWord.id = 'appWord';
-					appWord.setAttribute("style","position:absolute;left:100px;top:100px;width:auto;height:auto;font-size:26px;color:#fff;z-index:999999;letter-spacing:10px;");
+					appWord.className = 'app-word';
 				document.getElementsByTagName("body")[0].appendChild(appWord);
 			}else{
 				var appWord = window.appWord = document.getElementById("appWord");
@@ -149,7 +150,7 @@
 					origil[i].action(i);
 				}
 
-				if(runTime%timeLen == 0){
+				if(runTime%timeLen === 0){
 					var enemy = new enemyF();
 					enemy.init(id);
 					origil[ origil.length ] = enemy;
@@ -181,7 +182,7 @@
 					_this.enemy.style.left = l + "px";
 					_this.enemy.style.top = "-" + h + "px";
 					document.getElementsByTagName("body")[0].appendChild(_this.enemy);
-				}
+				};
 
 				this.action = function(i){
 					_this.enemy.style.top = _this.enemy.offsetTop + Math.round(_this.enemy.offsetWidth/origil_speed) + "px";
@@ -189,12 +190,12 @@
 						_this.enemy.parentNode.removeChild(_this.enemy);
 						origil.splice(i,1);
 					}
-				}
+				};
 
 				this.update = function(){
 					_this.age += origil_time; // 年龄增加
-				}
-			}
+				};
+			};
 		}
-	}
+	};
 })();
