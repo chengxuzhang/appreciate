@@ -5,12 +5,15 @@
 	<title>赞赏</title>
 	<script type="text/javascript" src="appreciate.js"></script>
 	<style>
-		.enemy{background-color:#000;position:absolute;}
+		.enemy{position:absolute;background:url('money.png') center center no-repeat;background-size:100% 100%;}
+		.qr-top{width: 100%;height: 35px;}
+		.qr-top li{list-style: none;width: 50%;line-height: 35px;text-align: center;font-size:14px;float:left;cursor:pointer;}
+		.qr-top li.current{background-color:#eee;}
 	</style>
 </head>
 <body>
-	<div id="appreciate">
+	<button id="appreciate">
 		赞我
-	</div>
+	</button>
 </body>
 </html>

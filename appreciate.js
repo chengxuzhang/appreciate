@@ -16,11 +16,16 @@
 					if(canClose){
 						cover.parentNode.removeChild(cover);
 						stopMoneyRain();
+						closeQRcode();
 						closeWord();
 					}
 				}
 			document.getElementsByTagName("body")[0].appendChild(cover);
 			playWord(0);
+		}
+
+		function closeQRcode(){
+			Qr.parentNode.removeChild(Qr); // 去掉二维码
 		}
 
 		/**
@@ -30,7 +35,7 @@
 		 * @return {[type]} [description]
 		 */
 		function showQRcode(){
-			var Qr = document.createElement("div");
+			var Qr = window.Qr = document.createElement("div");
 				Qr.className = 'qr';
 				Qr.setAttribute("style","position:absolute;right:100px;top:100px;background:#fff;border-radius:5px;width:300px;height:450px;z-index:999999;");
 			var QrTop = document.createElement("div");
@@ -114,7 +119,7 @@
 			var origil = window.origil = [];
 			var origil_speed = 5; // 移动速度
 			var origil_time = 20; // 时间间隔
-			var timeLen = 200; // 多久产生一个敌机
+			var timeLen = 30; // 多久产生一个金币
 			var runTime = 0;
 			var id = 0;
 
@@ -159,7 +164,7 @@
 				}
 
 				this.action = function(i){
-					_this.enemy.style.top = _this.enemy.offsetTop + origil_speed + "px";
+					_this.enemy.style.top = _this.enemy.offsetTop + Math.round(_this.enemy.offsetWidth/origil_speed) + "px";
 					if(_this.enemy.offsetTop>document.documentElement.clientHeight - 20){
 						_this.enemy.parentNode.removeChild(_this.enemy);
 						origil.splice(i,1);
