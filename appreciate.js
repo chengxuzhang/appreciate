@@ -45,10 +45,10 @@
 				Qr.className = 'qr';
 			var QrTop = document.createElement("div");
 				QrTop.className = 'qr-top';
-				QrTop.innerHTML = '<li class="current" data-img="money.png">微信</li><li data-img="erweima.jpg">支付宝</li>';
+				QrTop.innerHTML = '<li class="current" data-img="weixin.png">微信</li><li data-img="zhifubao.jpg">支付宝</li>';
 			var QrBody = document.createElement("div");
 				QrBody.className = 'qr-body';
-				QrBody.innerHTML = '<img src="money.png">';
+				QrBody.innerHTML = '<img src="weixin.png">';
 			Qr.appendChild(QrTop);
 			Qr.appendChild(QrBody);
 			document.getElementsByTagName("body")[0].appendChild(Qr);
@@ -91,7 +91,7 @@
 			}else{
 				var appWord = window.appWord = document.getElementById("appWord");
 			}
-			var str = '老夫昨晚夜观天象，见九星连珠#料定必有大事发生#原来是你要来施财#不跟你多BB，音响，灯光，摄像师准备#开始下雨咯&#其实我是秦始皇，打钱吧$';
+			var str = '老夫昨晚夜观天象，见九星连珠#料定必有大事发生#今天这个时候肯定有人要来施财#不跟你多BB，音响，灯光，摄像师准备#金钱雨，准备！下&#说了你们可能不太信#其实我是秦始皇，打钱吧$';
 			var wTime = window.wTime = setInterval(function(){
 				if(str.length-1 < wNum){
 					clearInterval(wTime);
